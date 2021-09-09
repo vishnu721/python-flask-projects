@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: taskapp
+  labels:
+    app: taskapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: taskapp
+  template:
+    metadata:
+      name: taskapp
+      labels:
+        app: taskapp
+    spec:
+      containers:
+        - name: taskapp
+          image: vishnus5/pythontask-app
+          ports:
+            - containerPort: 5000
+          imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: taskapp-svc
+spec:
+  type: LoadBalancer
+  selector:
+    app: taskapp
+  ports:
+    - port: 8080
+      targetPort: 5000
