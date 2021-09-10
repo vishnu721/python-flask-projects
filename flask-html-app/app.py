@@ -1,14 +1,13 @@
-from flask import Flask, request, render_template
-from pymongo import MongoClient
+from flask import Flask, request, jsonify, render_template
+from flask_pymongo import PyMongo
+from bson.objectid import ObjectId
+import socket
 
-# define the flask app
 app = Flask(__name__)
-#app.config["MONGO_URI"] = "mongodb://mongo:27017/dev"
-
-# define the mongodb client
-mongo = MongoClient(port=27017)
-# define the database to use
-db = mongo.student_data
+app.config["MONGO_URI"] = "mongodb://mongo:27017/dev"
+app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
+mongo = PyMongo(app)
+db = mongo.db
 
 # define the home page route
 @app.route('/')
